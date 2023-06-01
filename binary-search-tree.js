@@ -48,20 +48,49 @@ class Node {
 
   dfsPreOrder() {
 
+    let arr = [];
+
+    if (!this) return;
+
+    arr.push(this.val);
+
+    if (this.left) arr.push(...this.left.dfsPreOrder());
+    if (this.right) arr.push(...this.right.dfsPreOrder());
+
+    return arr;
+
   }
 
   /** dfsInOrder(): Traverse from the invoking node using in-order DFS.
   * Returns an array of visited nodes. */
 
   dfsInOrder() {
+    let arr = [];
 
+    if (!this) return;
+
+
+    if (this.left) arr.push(...this.left.dfsInOrder());
+    arr.push(this.val);
+    if (this.right) arr.push(...this.right.dfsInOrder());
+
+    return arr;
   }
 
   /** dfsPostOrder(): Traverse from the invoking node using post-order DFS.
   * Returns an array of visited nodes. */
 
   dfsPostOrder() {
+    let arr = [];
 
+    if (!this) return;
+
+
+    if (this.left) arr.push(...this.left.dfsPostOrder());
+    if (this.right) arr.push(...this.right.dfsPostOrder());
+    arr.push(this.val);
+
+    return arr;
   }
 
 }
@@ -164,6 +193,8 @@ class BinarySearchTree {
    * Returns an array of visited nodes. */
 
   dfsPreOrder() {
+    if (!this.root) return [];
+    return this.root.dfsPreOrder();
 
   }
 
@@ -171,21 +202,36 @@ class BinarySearchTree {
    * Returns an array of visited nodes. */
 
   dfsInOrder() {
-
+    if (!this.root) return [];
+    return this.root.dfsInOrder();
   }
 
   /** dfsPostOrder(): Traverse the BST using post-order DFS.
    * Returns an array of visited nodes. */
 
   dfsPostOrder() {
-
+    if (!this.root) return [];
+    return this.root.dfsPostOrder();
   }
 
   /** bfs(): Traverse the BST using BFS.
    * Returns an array of visited nodes. */
 
   bfs() {
+    let visitedArray = [];
+    if (!this.root) return visitedArray;
 
+    let todoQueue = [this.root];
+
+    while (todoQueue.length) {
+      let current = todoQueue.shift();
+
+      visitedArray.push(current.val);
+
+      if (current.left) todoQueue.push(current.left);
+      if (current.right) todoQueue.push(current.right);
+    }
+    return visitedArray;
   }
 
   /** findSuccessorNode(node): Find and return node with next largest value.
